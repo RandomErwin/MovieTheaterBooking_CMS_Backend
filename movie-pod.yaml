@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: movie-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: movie
+  template:
+    metadata:
+      labels:
+        app: movie
+    spec:
+      containers:
+      - name: movie-container
+        image: generainerwin/movie-demo:latest
+        ports:
+        - containerPort: 8080
