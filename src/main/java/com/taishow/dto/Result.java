@@ -1,8 +1,11 @@
 package com.taishow.dto;
 
-public class Result<T> {
-    private Integer returnCode;
+import java.io.Serializable;
 
+public class Result<T> implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    private Integer returnCode;
     private T data;
 
     public Integer getReturnCode() {

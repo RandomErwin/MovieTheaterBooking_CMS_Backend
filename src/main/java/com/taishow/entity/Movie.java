@@ -1,11 +1,15 @@
 package com.taishow.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.util.Date;
 
+@JsonIgnoreProperties
 @Entity
-public class Movie {
+public class Movie implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,6 +53,26 @@ public class Movie {
 
     @Column(name = "is_homepage_trailer", nullable = false)
     private boolean isHomepageTrailer;
+
+    public Movie() {
+    }
+
+    public Movie(Integer id, String title, String titleEnglish, String rating, Integer runtime, String genre, Date releaseDate, String director, String synopsis, String language, String trailer, String poster, boolean isPlaying, boolean isHomepageTrailer) {
+        this.id = id;
+        this.title = title;
+        this.titleEnglish = titleEnglish;
+        this.rating = rating;
+        this.runtime = runtime;
+        this.genre = genre;
+        this.releaseDate = releaseDate;
+        this.director = director;
+        this.synopsis = synopsis;
+        this.language = language;
+        this.trailer = trailer;
+        this.poster = poster;
+        this.isPlaying = isPlaying;
+        this.isHomepageTrailer = isHomepageTrailer;
+    }
 
     public Integer getId() {
         return id;

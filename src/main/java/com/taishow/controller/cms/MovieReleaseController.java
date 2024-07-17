@@ -17,7 +17,7 @@ public class MovieReleaseController {
         this.movieService = movieService;
     }
 
-    // 當前端發送FormData時，後端需要有與之對應的參數@RequestParam
+    // 當前端發送FormData時，後端需要有與之對應的參數 @RequestParam
     // CORS藉由一堆的response header => 告訴瀏覽器有哪些東西前端具有存取權
     // no-cors => 後端增加 header: Access-Control-Allow-Origin: *
     @PostMapping("/createMovie")
@@ -71,7 +71,7 @@ public class MovieReleaseController {
 
     @GetMapping("/getMovie/isPlaying")
     public Result getMoviesByIsPlaying() {
-        return movieService.getMoviesIsPLaying();
+        return movieService.getMoviesIsPlaying();
     }
 
     // @PathVariable 記得要標註，否則找不到目標物

@@ -1,5 +1,6 @@
 package com.taishow.handler;
 
+import com.taishow.resource.ErrorResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import com.taishow.exception.InvalidRequestException;
-import com.taishow.resource.ErrorResouce;
 import com.taishow.resource.FieldResource;
 import com.taishow.resource.InvalidErrorResource;
 
@@ -21,7 +21,6 @@ import java.util.List;
 // 使用AOP統一日誌紀錄 => @RestControllerAdvice: 全局異常處理器(處理整個程式拋出的異常)
 @RestControllerAdvice
 public class ApiExceptionHandler {
-
     // 執行日誌紀錄
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -29,8 +28,8 @@ public class ApiExceptionHandler {
     @ExceptionHandler(NoHandlerFoundException.class)
     @ResponseBody
     public ResponseEntity<?> handleNoFound(RuntimeException e){
-        ErrorResouce errorResouce = new ErrorResouce(e.getMessage());
-        ResponseEntity result = new ResponseEntity<Object>(errorResouce, HttpStatus.NOT_FOUND);
+        ErrorResource errorResource = new ErrorResource(e.getMessage());
+        ResponseEntity result = new ResponseEntity<Object>(errorResource, HttpStatus.NOT_FOUND);
         logger.warn("資料不存在 -------- {}", result);
         return result;
     }

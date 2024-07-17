@@ -3,6 +3,7 @@ package com.taishow.service.client;
 import com.taishow.dao.UserDao;
 import com.taishow.dto.Result;
 import com.taishow.entity.User;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,6 +33,7 @@ public class UserService {
         return new Result(200, "success");
     }
 
+    @Cacheable(value = "users", key = "#id")
     public Result getUser(Integer userId){
         // 避免找不到user、缺少值、為null的情況發生
         Optional<User> uesrsOptional = userDao.findById(userId);

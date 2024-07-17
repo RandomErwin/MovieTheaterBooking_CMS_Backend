@@ -1,9 +1,9 @@
 package com.taishow.resource;
 
-public class ErrorResouce {
+public class ErrorResource {
     private String message;
 
-    public ErrorResouce(String message) {
+    public ErrorResource(String message) {
         this.message = message;
     }
 
