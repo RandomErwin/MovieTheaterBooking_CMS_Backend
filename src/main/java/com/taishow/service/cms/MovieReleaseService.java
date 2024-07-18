@@ -19,29 +19,28 @@ import java.util.Optional;
 public class MovieReleaseService {
     private static final Logger logger = LoggerFactory.getLogger(MovieReleaseService.class);
     private MovieDao movieDao;
-    private RedisTemplate<String, Object> redisTemplate;
+    private CacheService cacheService;
 
-    public MovieReleaseService(MovieDao movieDao) {
+    public MovieReleaseService(MovieDao movieDao, CacheService cacheService) {
         this.movieDao = movieDao;
-    }
-
-    public void clearAllCaches() {
-        logger.info("Clearing all caches in Redis");
-        redisTemplate.getConnectionFactory().getConnection().flushAll();
+        this.cacheService = cacheService;
     }
 
     public Result createMovie(Movie movie){
         Movie movies = movieDao.save(movie);
+        clearAllCaches();
         return new Result(200, movie);
     }
 
     public Result updateMovie(Movie movies){
         Movie movie = movieDao.save(movies);
+        clearAllCaches();
         return new Result(200, movie);
     }
 
     public Result deleteMovie(Integer id){
         movieDao.deleteById(id);
+        clearAllCaches();
         return new Result(200, "success");
     }
 
@@ -76,5 +75,14 @@ public class MovieReleaseService {
     public Result updateMovieIsPlayingById(Integer id){
         movieDao.updateMovieIsPlayingById(id);
         return new Result(200, "success");
+    }
+
+    public void clearCaches() {
+        cacheService.clearCache("movieIsComing");
+        cacheService.clearCache("movieIsPlaying");
+    }
+
+    public void clearAllCaches() {
+        cacheService.clearAllCaches();
     }
 }
