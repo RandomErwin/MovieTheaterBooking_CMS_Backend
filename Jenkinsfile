@@ -20,7 +20,9 @@ pipeline {
         }
 
         stage('Deploy') {
-            sh 'scp target/my-app.jar usr@server:/path/to/deploy'
+            steps {
+                sh 'scp target/my-app.jar usr@server:/path/to/deploy'
+            }
         }
     }
 }
