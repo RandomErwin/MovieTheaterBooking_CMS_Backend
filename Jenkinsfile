@@ -21,7 +21,11 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh 'scp target/my-app.jar usr@server:/path/to/deploy'
+                script {
+                    withCredentials([sshUserPrivateKey(credentialsId: 'ssh-key-id', keyFileVariable: 'SSH_KEY')]) {
+                        sh 'scp -i $SSH_KEY target/my-app.jar $DEPLOY_SERVER:$DEPLOY_PATH'
+                    }
+                }
             }
         }
     }
