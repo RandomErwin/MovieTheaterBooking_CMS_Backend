@@ -54,9 +54,11 @@ public class MovieReleaseService {
     }
 
     // server 返回給前端的資料格式: JSON
+    // 當第一次調用 getMovieIsComing 方法時， Spring 會執行該方法並且將結果緩存
+    // 緩存的鍵：movieIsComing 值：方法的返回結果 => 後續調用：直接從緩存中返回結果，不再執行方法中的邏輯
     @Cacheable(value = "movieIsComing", key = "'movieIsComing'")
     public Result<List<Movie>> getMoviesIsComing(){
-        logger.info("Fetching movies that are coming soon.");
+        logger.info("取得即將上映的電影.");
         LocalDate today  = LocalDate.now();
         List<Movie> movies = movieDao.findMovieByReleaseDateAfter(
                 Date.from(today.atStartOfDay(ZoneId.systemDefault()).toInstant()));
@@ -65,7 +67,7 @@ public class MovieReleaseService {
 
     @Cacheable(value = "movieIsPlaying", key = "'movieIsPlaying'")
     public Result<List<Movie>> getMoviesIsPlaying(){
-        logger.info("Fetching movies that are currently playing.");
+        logger.info("取得現正熱映中的電影.");
         LocalDate today = LocalDate.now();
         List<Movie> movies = movieDao.findMovieByReleaseDateBeforeOrEqualAndIsPlayingTrue(
                 Date.from(today.atStartOfDay(ZoneId.systemDefault()).toInstant()));
