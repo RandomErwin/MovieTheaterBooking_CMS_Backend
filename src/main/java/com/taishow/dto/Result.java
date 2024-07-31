@@ -8,6 +8,18 @@ public class Result<T> implements Serializable {
     private Integer returnCode;
     private T data;
 
+    public Result() {
+    }
+
+    public Result(Integer returnCode) {
+        this.returnCode = returnCode;
+    }
+
+    public Result(Integer returnCode, T data) {
+        this.returnCode = returnCode;
+        this.data = data;
+    }
+
     public Integer getReturnCode() {
         return returnCode;
     }
@@ -21,18 +33,6 @@ public class Result<T> implements Serializable {
     }
 
     public void setData(T data) {
-        this.data = data;
-    }
-
-    public Result() {
-    }
-
-    public Result(Integer returnCode) {
-        this.returnCode = returnCode;
-    }
-
-    public Result(Integer returnCode, T data) {
-        this.returnCode = returnCode;
         this.data = data;
     }
 }
